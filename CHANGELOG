@@ -1,3 +1,8 @@
+version 2.3.0 (2021-12-16)
+- Remove font loading from class (#87)
+- Add Matrix and Signal icon (#84)
+- Improved symbol loading (#84)
+
 version: 2.2.0 (2021-07-28)
 - Remove dot in cventry when using moderncvbodyi.
 - Remove http baseurl in hyperref.
