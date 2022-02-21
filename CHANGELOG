@@ -1,3 +1,8 @@
+version 2.3.1 (2022-02-21)
+- Fix duplicate GitLab icon (#105)
+- Revert using detokenize in social links (#97)
+- Fix broken compilation in classic style (#96)
+
 version 2.3.0 (2021-12-16)
 - Remove font loading from class (#87)
 - Add Matrix and Signal icon (#84)
