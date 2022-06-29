@@ -16,7 +16,7 @@ If using [`academicons`](https://ctan.org/tex-archive/fonts/academicons) in the 
 [![CTAN](https://img.shields.io/ctan/v/moderncv.svg)](https://www.ctan.org/pkg/moderncv)
 [![Matrix](https://img.shields.io/matrix/moderncv:matrix.org)](https://matrix.to/#/#moderncv:matrix.org)
 
-As the main goal is to keep this package alive, it is maintained in a loosely structured team. You can contact us in our matrix room [moderncv:matrix.org](https://matrix.to/#/#moderncv:matrix.org), feel free to join if you have questions or want to contribute. Development takes places at [github.com/moderncv/moderncv](https://github.com/moderncv/moderncv).
+As the main goal is to keep this package alive, it is maintained in a loosely structured team. You can contact us in our matrix room [moderncv:matrix.org](https://matrix.to/#/#moderncv:matrix.org), feel free to join if you have questions or want to contribute. Development takes place at [github.com/moderncv/moderncv](https://github.com/moderncv/moderncv).
 
 ## Licence
 moderncv is licensed under the [LPPL-1.3c](https://spdx.org/licenses/LPPL-1.3c.html).
