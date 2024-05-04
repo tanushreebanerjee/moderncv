@@ -20,6 +20,8 @@ version 2.?.? (29 Jun 2023)
   babel for Spanish (#109).
 - Added Codeberg and Mastodon social icons (#107).
 - New \social options: arXiv, INSPIRE (#185)
+- Systematize colors and make them user adjustable. See documentation for details.
+  This requires the \moderncvcolor to be issued BEFORE \moderncvstyle.
 
 version 2.3.1 (21 Feb 2022)
 - Fix duplicate GitLab icon (#105).
