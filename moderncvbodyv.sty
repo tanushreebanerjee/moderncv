@@ -53,6 +53,7 @@
 %   used by \cvlistdoubleitem
 \@initializelength{\listdoubleitemcolumnwidth}
 %\@initializelength{\listdoubleitemmaincolumnwidth}
+\@initializelength{\listitemsymbolspace}          \settowidth{\listitemsymbolspace}{0pt}
 
 % commands
 \@initializecommand{\recomputecvbodylengths}{%
@@ -118,14 +119,14 @@
     \begin{minipage}[t]{\doubleitemcolumnwidth}\ifthenelse{\equal{#4}{}}{}{\hintstyle{#4}: }#5\end{minipage}}}
 
 \renewcommand*{\cvlistitem}[2][.5ex]{%
-  \@cvitem[#1]{}{\listitemsymbol\begin{minipage}[t]{\listitemcolumnwidth}#2\end{minipage}}}
+  \@cvitem[#1]{}{\listitemsymbol\hspace{\listitemsymbolspace}\begin{minipage}[t]{\listitemcolumnwidth-\listitemsymbolspace}#2\end{minipage}}}
 
 \renewcommand*{\cvlistdoubleitem}[3][.5ex]{%
-  \@cvitem[#1]{}{\listitemsymbol\begin{minipage}[t]{\listdoubleitemcolumnwidth}#2\end{minipage}%
+  \@cvitem[#1]{}{\listitemsymbol\hspace{\listitemsymbolspace}\begin{minipage}[t]{\listdoubleitemcolumnwidth-\listitemsymbolspace}#2\end{minipage}%
   \hfill% fill of \separatorcolumnwidth
   \ifthenelse{\equal{#3}{}}%
     {}%
-    {\listitemsymbol\begin{minipage}[t]{\listdoubleitemcolumnwidth}#3\end{minipage}}}}
+    {\listitemsymbol\hspace{\listitemsymbolspace}\begin{minipage}[t]{\listdoubleitemcolumnwidth-\listitemsymbolspace}#3\end{minipage}}}}
 
 \@initializebox{\cventryyearbox}
 \@initializelength{\cventrytitleboxwidth}
