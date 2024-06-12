@@ -95,7 +95,8 @@
   emph={
     cvitem, cventry, cvdoubleentry, cvdoubleitem, cvtripleitem, cvlistitem, cvlistdoubleitem, cvcolumns, moderncvstyle, moderncvcolor,
     cvskill, cvskilllegend, cvskillplainlegend, cvskillhead, cvskillentry, nopagenumbers,
-    name, born, address, email, link, social, phone, homepage, extrainfo, photo, quote, section, subsection, setlength, NewDocumentCommand, definecolor, colorlet, cvitemwithcomment
+    name, born, address, email, link, social, phone, homepage, extrainfo, photo, quote, section, subsection, setlength, NewDocumentCommand, definecolor, colorlet, cvitemwithcomment,
+    recipient, subject, opening, closing, signature, enclosure
   },
   emphstyle={\color{cvblue}},
   emph={[2]
@@ -383,9 +384,15 @@ A command for a quote.
   \quote{<quote>}
 \end{lstlisting}
 
-\todox{explain adding pictures}
+\note{Long names and URLs can break some CVs and cover letters depending on the used style. Manually inserting line breaks for names with \code{\\\\} can help for \texttt{oldstyle} or \texttt{fancy}. Adjusting lengths as described in section \ref{subsection:adjusting:lengths} could help to mitigate issues with long URLs.}
 
-\todox{Add note about how to handle long names and long URLs. Is this handled correctly?}
+\paragraph{Pictures.}
+For some occasions you may need to include pictures besides the portrait photo. For this task it is helpful to know basic lengths used in \moderncv. For a more detailed description of lengths see section \ref{subsection:adjusting:lengths}.
+For instance, pictures can be included with \code{\\includegraphics}:
+\begin{lstlisting}
+  \hspace{\hintscolumnwidth + \separatorcolumnwidth}\includegraphics[<scale>]{<file name picture>}
+\end{lstlisting}
+Adding \code{\\hspace} in units of basic \code{moderncv} lengths will fit them more naturally into the CV or resume.  
 
 \paragraph{Bibliography.}
 In case BibTeX is used, the bibliography settings are adjusted in the lines
@@ -553,10 +560,50 @@ How to make length adjustments to the skill matrix will be explained in section 
 
 \subsection{Letter of motivation}
 
-\todo{add short explanation of motivation letter.}
-To add a subject to the letter of motivation or to close with your signature, see sections \ref{section:add:subject} and \ref{section:add:signature}, respectively.
+In order to provide additional information for a job application, {\moderncv} provides a motivation letter. Define the following recipient data fields to customize your letter:
+\paragraph{\code{\\recipient}}
+A command for the letter's recipient. This allows line breaks to properly format the recipient's address.
+\begin{lstlisting}
+  \recipient{<Team or contact person>}{<company>\\<street>\\<city>}
+\end{lstlisting}
 
+\paragraph{\code{\\date}}
+A command to set the letter's date.
+\begin{lstlisting}
+  \date{<your custom date>}
+\end{lstlisting}
 
+\paragraph{\code{\\subject}}
+A command to define the job application subject.
+\begin{lstlisting}
+  \subject{<subject>}
+\end{lstlisting}
+
+\paragraph{\code{\\opening}}
+A command to set your opening (e.g. ``Dear X,'' or ``To whom it may concern,'').
+\begin{lstlisting}
+  \opening{<greeting>}
+\end{lstlisting}
+
+\paragraph{\code{\\closing}}
+A command to set your closing (e.g. ``Sincerely,'' or ``Yours truly,'').
+\begin{lstlisting}
+  \closing{<closing>}
+\end{lstlisting}
+
+\paragraph{\code{\\signature}}
+An optional command to include your signature after the closing. This feature is defined using the \code{\\includegraphics}. The first argument is the scale and the second argument is the filename of your scanned signature.
+\begin{lstlisting}
+  \signature{<scale>}{<signature filename>}
+\end{lstlisting}
+
+\paragraph{\code{\\enclosure}}
+A command to list the attached documents. The first optional parameter allows a redefinition of the default ``Enclosure'' label.
+\begin{lstlisting}
+  \enclosure[<optional alternative label>]{<list of documents>}
+\end{lstlisting}
+
+\note If typesetting the resume in Chinese using CJK an additional \code{\\clearpage} is required after the \code{\\makeletterclosing} command. This helps \code{fancyhdr} to work correctly with CJK. Otherwise it will remove the page numbering by making \code{lastpage} undefined.
 
 \section{Customization}
 \label{section:customization}
@@ -756,6 +803,13 @@ If one wanted to use the dingbat fonts to replace the default phone symbol, one 
   \renewcommand*{\fixedphonesymbol}{\ding{38}~}
 \end{lstlisting}
 
+\paragraph{Alternative to icons}
+In case you do not want \texttt{symbols} (default) for the icons, there is also the option to replace icons with \texttt{letters} instead. This is set by the macro \code{\\moderncvicons}, which must be called after setting the style in the preamble.
+\begin{lstlisting}
+  \moderncvicons{<symbols|letters>}
+\end{lstlisting}
+This mechanism is also used to determine the icon set. In principle the \code{\\moderncvicons} can be used to determine the icon set with the possible values \texttt{marvosym}, \texttt{awesome} or \texttt{academic}, but it is recommended to let {\moderncv} decide the correct icon set due to differing \Latex compiler support.
+
 \subsubsection{Listing labels}
 The labels used in \code{itemize} environments, \code{cvlistitem} and \code{cvlistdoubleitem} can be changed in two different ways:
 
@@ -770,8 +824,7 @@ The labels used in \code{itemize} environments, \code{cvlistitem} and \code{cvli
 \end{lstlisting}
 \end{itemize}
 
-\subsection{Adjusting lengths}
-\todo{Add more adjustable lengths}
+\subsection{Adjusting lengths}\label{subsection:adjusting:lengths}
 Some lengths in \Moderncv can be adjusted.
 
 The hints column can be adjusted by setting \code{\\hintscolumnwidth}:
@@ -786,11 +839,35 @@ For the \code{classic} style, the amount of horizontal space for the name can be
 One should be careful though, as the length is normally calculated to avoid any overlap with the personal information.
 This should be used at one's own typographical risk.
 
+The spacing between the hints column and the CV entries can be adjusted by setting\\
+\code{\\separatorcolumnwidth}. The default value is \code{0.025\\textwidth}.
+\begin{lstlisting}
+  \setlength{\separatorcolumnwidth}{0.05\textwidth}
+\end{lstlisting}
+
+The spacing between the list symbol and the text item of \code{\\cvlistitem} and \code{\\cvlistdoubleitem} can be adjusted by setting \code{\\listitemsymbolspace} in the preamble. The default value is set to \code{0pt}.
+\begin{lstlisting}
+  \setlength{\listitemsymbolspace}{5pt}
+\end{lstlisting}
+
+The width of the footer can be adjusted by setting \code{\\footwidth}. Due to internal calculations \code{\\renewcommand} is needed. The default value is \code{0.8\\textwidth}.
+\begin{lstlisting}
+  \renewcommand*{\recomputefootlengths}{%
+  \setlength{\footwidth}{0.9\textwidth}}
+\end{lstlisting}
+
+The width of the quote can be adjusted by setting \code{\\quotewidth}. Due to internal calculations \code{\\renewcommand} is needed. The default value is \code{0.65\\textwidth}.
+\begin{lstlisting}
+  \renewcommand*{\recomputecvheadlengths}{%
+  \setlength{\quotewidth}{0.5\textwidth}}
+\end{lstlisting}
+
+
 % The different lengths used by moderncv are customizable by
 % \begin{lstlisting}
 % \setlength{<length>}{<new_dimensions>}
 % \end{lstlisting}
-% where \code{<length>} are \code{quotewidth}, \code{separatorcolumnwidth}, \code{maincolumnwidth}, \code{doubleitemmaincolumnwidth}, \code{listitemsymbolwidth}, \code{listdoubleitemmaincolumnwidth},
+% where \code{<length>} are \code{maincolumnwidth}, \code{doubleitemmaincolumnwidth}, \code{listitemsymbolwidth}, \code{listdoubleitemmaincolumnwidth},
 
 
 \subsubsection{Lengths in the skill matrix}
@@ -819,6 +896,37 @@ The width of the skill matrix columns can be adjusted as follows:
   \setcvskillcolumns[\widthof{``Language''}]
 \end{lstlisting}
 \code{<width>} and \code{<exp_width>} should be lengths smaller than \code{\\textwidth}, and \code{<factor>} must be between 0 and 1.
+
+\subsection{Additional link commands}%% adapted from Cristina Sambo's documentation
+To create links to a website or a email address, use the following commands:
+
+A general weblink with optional text.  
+\begin{lstlisting}
+  \link[<text>]{<link>}
+  %% example
+  \link[name of the link]{ftp://ftp.somesite.org}
+\end{lstlisting}
+
+An HTTP link. The HTTP prefix is generated automatically and is not needed in the link argument.
+\begin{lstlisting}
+  \link[<text>]{<link>}
+  %% example
+  \link[goto HTTP site]{www.somehttpsite.org}
+\end{lstlisting}
+
+A HTTPS link. The HTTPS prefix is generated automatically and is not needed in the link argument.
+\begin{lstlisting}
+  \link[<text>]{<link>}
+  %% example
+  \httpslink[goto HTTPS site]{www.somesecuresite.org}
+\end{lstlisting}
+
+An email link. The mailto prefix is generated automatically and is not needed in the link argument.
+\begin{lstlisting}
+  \link[<text>]{<link>}
+  %% example
+  \emaillink[my email]{jdoe@website.org}
+\end{lstlisting}
 
 \subsection{Page breaks and orphaned section headers}
 If \Latex breaks pages just after \code{\\section} or \code{\\subsection} commands, try adjusting the stretchability of the page with \code{\\cvsectionstretchability} or \code{\\cvsubsectionstretchability}:
@@ -868,58 +976,6 @@ A good explanation of \code{\\needspace} can be found at \url{https://tex.stacke
 
 
 \subsection{Tips and Tricks}
-\subsubsection{Including a scanned signature in the letter of motivation}
-\label{section:add:signature}
-To add a scanned signature to your letter of motivation, add the following to your preamble:
-%%%% redefinition of makeletterclosing without printing Name and last name but inserting
-%%%% a signature png instead.
-\begin{lstlisting}
-  \makeatletter
-  \renewcommand*{\makeletterclosing}{
-    \@closing\\[3em]%
-    \includegraphics[height=1.5cm, width=5.5cm]{<signature.png>}
-    % \textbf{\@firstname~\@lastname}%
-    \ifthenelse{\isundefined{\@enclosure}}{}{%
-      \\%
-      \vfill%
-      \textcolor{color2}{\textit{\enclname: \@enclosure}}%
-    }%
-  }
-  \makeatother
-\end{lstlisting}
-
-\subsubsection{Including a subject in the letter of motivation}
-\label{section:add:subject}
-To add a subject to your letter of motivation, add the following to your preamble:
-\begin{lstlisting}
-  \makeatletter
-  \renewcommand*{\makeletterhead}{%
-    \recomputeletterlengths   % in case we are switching from letter to resume, or vice versa
-    % recipient block
-    \begin{minipage}[t]{0.5\textwidth}
-      \raggedright\addressfont%
-      \textbf{\textup{\@recipientname}}\\%
-      \@recipientaddress%
-    \end{minipage}
-    % date
-    \hfill  % US style
-    % \\[1em] % UK style
-    \@date\\[4em]   % US informal style: "January 1, 1900"; UK formal style: "01/01/1900"
-    % opening
-    \raggedright%
-    \textbf{\subject}\\[2em]
-    \@opening\\[1.5em]%
-    % ensure no extra spacing after \makelettertitle due to a possible blank line
-    % \ignorespacesafterend   % not working
-    \hspace{0pt}\par\vspace{-\baselineskip}\vspace{-\parskip}
-  }
-  \makeatother
-\end{lstlisting}
-Then a subject can be added to the letter of motivation with
-\begin{lstlisting}
-  \subject{<subject_text>}
-\end{lstlisting}
-
 \subsubsection{Legal disclaimer at the end of the CV}
 Some countries (e.g. Italy) require you to add a legal disclaimer authorizing the use of the personal data in your CV.
 To add such a disclaimer, add the following to the bottom of your CV:%
@@ -937,7 +993,21 @@ To add such a disclaimer, add the following to the bottom of your CV:%
 \label{section:implementationDetails}
 
 \subsection{Creating your own styles}
-\todox{Explain how to create styles and and how to recombine headers, footers, bodies etc.}
+Currently {\moderncv} ships with six different styles: \texttt{casual} (default), \texttt{classic}, \texttt{banking}, \texttt{oldstyle}, \texttt{fancy} and \texttt{contemporary}. Internally, these styles are numbered 1, 2, 3, 4, 5 and 6, respectively. All styles except \texttt{oldstyle} and \texttt{fancy} possess additional option parameters which were described in section \ref{section:customization:stylesAndOptions}.
+
+Different styles' head, body and foot can be combined to create custom styles. This is done by setting \code{\\moderncvhead}, \code{\\moderncvbody} and \code{\\moderncvfoot} in the preamble. Here is an example of a custom style with a \texttt{banking} head, an \texttt{oldstyle} body and a \texttt{casual} foot:
+\begin{lstlisting}
+  \moderncvhead{3}
+  \moderncvbody{4}
+  \moderncvfoot{1}
+\end{lstlisting}
+Furthermore, options for each part of {\moderncv} parts can be set as well in such combinations. To get a CV with a \texttt{classic} head and a \texttt{banking} body with full rules, define the following in the preamble:
+\begin{lstlisting}
+  \moderncvhead{2}
+  \moderncvbody[fullrules]{3}
+  \moderncvfoot{1}
+\end{lstlisting}
+
 
 \subsection{Required packages}
 \label{section:implementationDetails:requiredPackages}
