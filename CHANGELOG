@@ -4,6 +4,7 @@ version next
 - Fix spacing between first and last name (#204)
 - Include social icons in cover letter for styles classic, fancy and banking (#170)
 - Update Oldstyle to use symbols instead of marvosym (#209)
+- Added SimpleX and Threema social (#217)
 - Fix spacing between first and last name again (#220)
 - Make header details flush against sides for casual, classic, and contemporary
   styles (#229)
